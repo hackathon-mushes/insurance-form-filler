@@ -4,4 +4,8 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
-console.log("Hello mundo")
+chrome.browserAction.onClicked.addListener(function () {
+    console.log("Hello mundão")
+    alert('Hi')
+    // chrome.tabs.create({ url: chrome.runtime.getURL("index.html") });
+});
