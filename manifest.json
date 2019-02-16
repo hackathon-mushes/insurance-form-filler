@@ -9,7 +9,7 @@
     },
     "description": "Build an Extension!",
     "content_scripts": [{
-      "js": ["js/popup.js"],
+      "js": ["contentscript.js" ],
       "matches": ["http://*/*", "https://*/*"]
       }],
     "permissions": [
