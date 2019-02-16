@@ -35,5 +35,7 @@ window.onload = function(){
     chrome.storage.sync.get('profile', function(result){
       console.log(result)
     } )
+
+    alert('Formulário salvo com sucesso.')
   };
 };
