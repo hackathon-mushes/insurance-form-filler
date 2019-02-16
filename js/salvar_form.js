@@ -9,7 +9,7 @@ window.onload = function(){
     for (var i = 0; i < dados.length; i++) {
       var nome = dados[i].name
       var valor = dados[i].value
-      chrome.storage.sync.set({nome:valor}); //Salva elementos
+      chrome.storage.sync.set({[nome]:valor}); //Salva elementos
       // alert(dados[i].name);
     };
   };
