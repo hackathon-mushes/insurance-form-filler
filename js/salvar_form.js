@@ -2,16 +2,15 @@ window.onload = function(){
   let botao_salvar = document.getElementById('botao_salvar');
 
   botao_salvar.onclick = function(element) {
-    var dados = new FormData(document.querySelector('form'));
-    alert(document.getElementsByName("estado_origem")[0].value);
+    var dados = document.getElementById("myForm").elements;
+    // alert(dados[0].name);
 
-  //   chrome.storage.sync.set({"estado_origem":document.getElementsByName("estado_origem")[0].value,
-  //                           "destino_nacional":document.getElementsByName("destino_nacional")[0].value,
-  //                           "estado_origem":document.getElementsByName("estado_origem")[0].value,
-  //                           "estado_origem":document.getElementsByName("estado_origem")[0].value,
-  //                           "estado_origem":document.getElementsByName("estado_origem")[0].value,
-  //                           "estado_origem":document.getElementsByName("estado_origem")[0].value,}
-  // })
-
+    //Criação do dicionário com o valor dos elementos
+    for (var i = 0; i < dados.length; i++) {
+      var nome = dados[i].name
+      var valor = dados[i].value
+      chrome.storage.sync.set({[nome]:valor}); //Salva elementos
+      // alert(dados[i].name);
+    };
   };
 };
