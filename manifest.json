@@ -8,7 +8,12 @@
       "128": "images/logo_IFF_128.png"
     },
     "description": "Build an Extension!",
+    "content_scripts": [{
+      "js": ["contentscript.js" ],
+      "matches": ["http://*/*", "https://*/*"]
+      }],
     "permissions": [
+    "declarativeContent",
     "activeTab",
     "tabs",
     "storage",
