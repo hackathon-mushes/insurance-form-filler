@@ -12,11 +12,12 @@ let apply_form_button = document.getElementById('apply_form_button');
 
   apply_form_button.onclick = function(element) {
 
+    chrome.storage.sync.get('profile', function(result){
+      console.log(result)
+
       message = {
         'command':'apply-form',
-        'values':{
-          'a':1
-        }
+        'values':result
       }
 
       chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -24,5 +25,7 @@ let apply_form_button = document.getElementById('apply_form_button');
           // console.log(response.farewell);
         });
       });
+
+    });
       
   };

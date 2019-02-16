@@ -5,12 +5,23 @@ window.onload = function(){
     var dados = document.getElementById("myForm").elements;
     // alert(dados[0].name);
 
+    var obj = {}
+
     //Criação do dicionário com o valor dos elementos
     for (var i = 0; i < dados.length; i++) {
       var nome = dados[i].name
       var valor = dados[i].value
+
+      obj[nome] = valor
+
       chrome.storage.sync.set({[nome]:valor}); //Salva elementos
       // alert(dados[i].name);
     };
+
+    chrome.storage.sync.set({'profile':obj})
+
+    chrome.storage.sync.get('profile', function(result){
+      console.log(result)
+    } )
   };
 };

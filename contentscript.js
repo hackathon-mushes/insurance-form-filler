@@ -37,30 +37,84 @@ function updateInputFieldValue(inputFieldID, new_value){
 }
 
 
-allianz_ids = ['ddlPlans', 'ddlOriginQuote', 'ddlDestinationQuote', 'ddlTravelReason', 'children', 'adults', 'unpregned', 'departureDate', 'returnDate'  ]
+allianz_ids = ['ddlPlans', 
+                'ddlOriginQuote', 
+                'ddlDestinationQuote', 
+                'ddlTravelReason', 
+                'children', 
+                'adults', 
+                'unpregned', 
+                'departureDate', 
+                'returnDate'  ]
 
 // Check for Allianz
 function checkAllianz(values, ids){
 
-    for (var i = 0; i < ids.length; i++){
+    console.log(ids)
 
+    for (i in ids){
         id = ids[i]
-        val = values[i]
+        val = values[id]
 
-        updateInputFieldValue( id, val)
+        console.log(`${id}:${val}`)
+
+        result = updateInputFieldValue( id, val)
+
     }
 }
 
 data = [3, 10, 2, 2, 1, 1, 3, '1/1/2020', '2/2/2020']
 
+
+// TODO planos**
+
+dict_correspond = { 'ddlPlans': 'motivo', 
+                    'ddlOriginQuote': 'motivo',//'estado_origem', 
+                    'ddlDestinationQuote':'motivo',//'pais_destino', 
+                    'ddlTravelReason':'motivo',
+                    'children':'passageiros_ate_70',
+                    'adults':'passageiros_acima_70',
+                    'unpregned':'numero_gestantes',
+                    'departureDate':'data_ida',
+                    'returnDate':'data_volta' 
+                  }
+
+function relateData(values, ids){
+
+    array_data = []
+
+    for (i in ids){
+        key = ids[i]
+        val = values[ dict_correspond[key] ]
+        if(val.length < 2){
+            // check if str is int
+            array_data[key] = parseInt(val) // Gambs
+        }
+        else if(val.length == 10) {
+            // check if date
+            array_data[key] = val.replace('-','/')
+            array_data[key] = array_data[key].replace('-','/')
+        }
+        else{
+            array_data[key] = val
+        }
+         
+        // console.log(`key:${key} dict:${dict_correspond[key]} value:${values[ dict_correspond[key] ]}` )
+    }
+
+    console.log(array_data)
+
+    return array_data
+}
+
 chrome.runtime.onMessage.addListener(
     function(message, callback) {
 
-        // alert('Message: ' + message )
-
         if (message){
             if (message.command == 'apply-form' ){
-                checkAllianz( data, allianz_ids)
+                console.log(message)
+                corrected_data = relateData(message.values.profile, allianz_ids)
+                checkAllianz( corrected_data, allianz_ids )
             }
         }
     }
